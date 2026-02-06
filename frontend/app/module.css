@@ -1,0 +1,26 @@
+.sub-button {
+  background-color: #00a2ff;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.sub-button:hover {
+  background-color: #0077ff;
+  transform: scale(1.03);
+}
+
+input:focus {
+  outline: none;
+  border: 2px solid #007bff;
+  box-shadow: 0 0 9px rgba(0, 123, 255, 0.5);
+}
+form {
+  border: 2px solid #007bff;
+  box-shadow: 0 0 9px rgba(0, 123, 255, 0.5);
+}

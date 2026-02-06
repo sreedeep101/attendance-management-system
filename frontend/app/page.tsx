@@ -1,5 +1,6 @@
 "use client";
 
+import './module.css';
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -34,8 +35,8 @@ export default function LoginPage() {
 
   return (
     <div style={{ display: "flex", height: "100vh", justifyContent: "center", alignItems: "center" }}>
-      <form onSubmit={handleLogin} style={{ width: 300 }}>
-        <h2>Login</h2>
+      <form onSubmit={handleLogin} style={{ borderRadius: 10,  gap: 8, padding: 20, justifyContent: "center", width: 350,display: "flex" , flexDirection: "column", alignItems: "center" }} >
+        <h2 style={{ color: "white" , fontSize: 27, fontWeight: "bold" }}>Login</h2>
 
         {error && <p style={{ color: "red" }}>{error}</p>}
 
@@ -55,7 +56,7 @@ export default function LoginPage() {
           style={{ width: "100%", padding: 10, marginBottom: 10 }}
         />
 
-        <button type="submit" style={{ width: "100%", padding: 10 }}>
+        <button type="submit" className="sub-button">
           Login
         </button>
       </form>

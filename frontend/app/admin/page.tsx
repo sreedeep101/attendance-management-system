@@ -1,12 +1,11 @@
 "use client";
 
-import EmployeeTable from "./components/EmployeeTable";
+import AuthGuard from "../components/AuthGuard";
 
 export default function AdminPage() {
   return (
-    <div style={{ padding: 20 }}>
+    <AuthGuard role="admin">
       <h1>Admin Dashboard</h1>
-      <EmployeeTable />
-    </div>
+    </AuthGuard>
   );
 }

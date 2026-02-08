@@ -2,7 +2,7 @@
 
 import './module.css';
 import { useState } from "react";
-import axios from "axios";
+import API from "./lib/api"
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
@@ -16,7 +16,7 @@ export default function LoginPage() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:5000/login", {
+      const res = await API.post("/login", {
         email,
         password,
       });

@@ -1,0 +1,63 @@
+.leave-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
+  color: black;
+}
+
+.leave-card {
+  width: 450px;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.leave-card h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: red;
+}
+
+.leave-card label {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.leave-card input,
+.leave-card textarea {
+  margin-top: 5px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.leave-card textarea {
+  height: 80px;
+  resize: none;
+  color: black;
+}
+
+.leave-card button {
+  margin-top: 15px;
+  padding: 10px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.leave-card button:hover {
+  background: #1e7e34;
+}
+
+.msg {
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+  color: blue;
+}

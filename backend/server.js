@@ -118,9 +118,10 @@ app.get("/admin/reports", verifyToken , (req,res)=>{
     if(req.user.role !== "admin") return res.send("Access denied");
 
     db.query(
-        `SELECT users.name, 
-        SUBSTRING_INDEX(reports.report,' ',5) As short_report,
-        reports.date
+        `SELECT users.id as user_id , 
+        users.name, 
+        reports.date,
+        SUBSTRING_INDEX(reports.report,' ',5) As short_report
         FROM reports
         JOIN users ON users.id = reports.user_id
         `,(err,result)=>{
@@ -167,7 +168,7 @@ app.get("/admin/report-details/:userId/:date", verifyToken, (req,res)=>{
 
   const query = `
     SELECT users.name, users.email, reports.report,
-    attendance.check_in, attendance.check_out, attendance.session_minutes
+           attendance.check_in, attendance.check_out, attendance.session_minutes
     FROM users
     LEFT JOIN reports ON users.id = reports.user_id AND reports.date=?
     LEFT JOIN attendance ON users.id = attendance.user_id AND attendance.date=?
@@ -211,7 +212,7 @@ app.post("/employee/checkin", verifyToken, (req, res) => {
         return res.send("you are ourside office radius");
 
     db.query(
-        "INSERT INTO attendence(user_id,date,check_in) VALUES (?,CURDATE(),NOW())",
+        "INSERT INTO attendance(user_id,date,check_in) VALUES (?,CURDATE(),NOW())",
         [req.user.id],
         (err) => {
             if (err) return res.send(err);
@@ -226,7 +227,7 @@ app.post("/employee/checkout", verifyToken, (req, res) => {
     if (req.user.role !== "employee") return res.send("Only employee allowed");
 
     db.query(
-        "SELECT * FROM attendence WHERE user_id=? AND check_out IS NULL ORDER BY id DESC LIMIT 1",
+        "SELECT * FROM attendance WHERE user_id=? AND check_out IS NULL ORDER BY id DESC LIMIT 1",
         [req.user.id],
         (err, result) => {
             if(err) return res.send(err);
@@ -235,7 +236,7 @@ app.post("/employee/checkout", verifyToken, (req, res) => {
             const session = result[0];
 
             const diffQuery = `
-            UPDATE attendence SET check_out=NOW(),
+            UPDATE attendance SET check_out=NOW(),
             session_minutes=TIMESTAMPDIFF(MINUTE, check_in, NOW())
             WHERE id=? 
             `;
@@ -252,7 +253,7 @@ app.post("/employee/checkout", verifyToken, (req, res) => {
 
 app.get("/employee/today-work", verifyToken , (req, res) => {
     db.query(
-        "SELECT SUM(session_minutes) AS total_minutes FROM attendence WHERE user_id=? AND date=CURDATE()",
+        "SELECT SUM(session_minutes) AS total_minutes FROM attendance WHERE user_id=? AND date=CURDATE()",
         [req.user.id],
         (err, result) => {
             if (err) return res.send(err);
@@ -264,7 +265,7 @@ app.get("/employee/today-work", verifyToken , (req, res) => {
 //to check employee status
 app.get("/employee/status", verifyToken, (req, res) => {
     db.query(
-        "SELECT * FROM attendence WHERE user_id=? AND check_out IS NULL",
+        "SELECT * FROM attendance WHERE user_id=? AND check_out IS NULL",
         [req.user.id],
         (err, result) => {
             if (err) return res.send(err);
